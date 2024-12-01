@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      jogoFlame3_0: 7645933743026569014
+      jogoFlame3_1: -6429159467206234623
+      jogoFlame3_2: -2317942792056434088
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
