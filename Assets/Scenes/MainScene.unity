@@ -299,6 +299,7 @@ MonoBehaviour:
   myRigidBody: {fileID: 516196049}
   jumpForce: 10
   horizontalSpeed: 10
+  onPlatform: 0
 --- !u!61 &516196051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -596,7 +597,7 @@ GameObject:
   - component: {fileID: 1797967767}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
