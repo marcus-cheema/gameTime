@@ -3,9 +3,13 @@ using UnityEngine;
 public class GuyScript : MonoBehaviour
 {
     public Rigidbody2D myRigidBody;
-    public int jumpForce = 20;
+    public int jumpForce = 10;
     public int horizontalSpeed = 5;
-    public bool onPlatform;
+    public double maxJumpTime = 0.25;
+
+    private bool onPlatform;
+    private bool jumped;
+    private float airTime = 0;
     void Start()
     {
         
@@ -15,12 +19,32 @@ public class GuyScript : MonoBehaviour
     void Update()
     {
         Vector2 currentLinearVelocity = myRigidBody.linearVelocity;
-        if (Input.GetKeyDown(KeyCode.Space) && onPlatform)
+        
+        if (Input.GetKeyDown(KeyCode.Space) && onPlatform) // Player Pressed {Jump}
         {
             currentLinearVelocity.y = jumpForce;
             onPlatform = false; // now, we're off the platform.
+            jumped = true; 
         }
-        
+
+        if (Input.GetKeyUp(KeyCode.Space) && jumped) // PLayer lets go of {Jump} -> Cannot Jump Higher
+        {
+            jumped = false;
+            airTime = 0;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && jumped) // Player holds {Jump} -> Jumps higher until maxJumpTime
+        {
+            airTime += Time.deltaTime;
+            currentLinearVelocity.y = jumpForce;
+            if (airTime > maxJumpTime)
+            {
+                jumped = false;
+                airTime = 0;
+            }
+        }
+
+
         if (Input.GetKey(KeyCode.A))
         {
             currentLinearVelocity.x = -horizontalSpeed;
@@ -41,6 +65,7 @@ public class GuyScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform")) // if we hit the platform, onPlatform.
         {
             onPlatform = true;
+            jumped = false;
         }
     }
 }
