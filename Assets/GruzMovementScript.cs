@@ -4,9 +4,9 @@ using UnityEngine;
 public class GruzScript : MonoBehaviour
 {
 
-    public Rigidbody2D gruzRigidBody;
-    public static int horizontalVelocity = 5;
-    public static int verticalVelocity = 10;
+    [SerializeField] private Rigidbody2D gruzRigidBody;
+    [SerializeField] private static int horizontalVelocity = 5;
+    [SerializeField] private static int verticalVelocity = 10;
 
     private Vector2 currentLinearVelocity;
     private bool bounce;
@@ -17,6 +17,10 @@ public class GruzScript : MonoBehaviour
     {
         currentLinearVelocity = new(horizontalVelocity, verticalVelocity);
         gruzRigidBody.linearVelocity = currentLinearVelocity;
+    }
+    private void Awake()
+    {
+        gruzRigidBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -37,7 +41,7 @@ public class GruzScript : MonoBehaviour
         gruzRigidBody.linearVelocity = currentLinearVelocity;
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Ceiling"))
         {

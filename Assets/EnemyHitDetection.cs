@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class CollisionDetecter : MonoBehaviour
+// This script identifies when the enemy interacts with the Player.
+// Should be applied to Enemy Attacks.
+
+public class EnemyHitDetection : MonoBehaviour
 {
-    public float parryWindow = 0.5f;
+    [SerializeField] private float parryWindow = 0.25f;
+    
     private float startTime;
     private bool touchedPlayer = false;
     private bool parried = false;
 
     private void Update()
     {
+        PlayerParry();
+    }
+
+    private void PlayerParry()
+    {
         // If we touchedPlayer, determine parry status
-        if (touchedPlayer) // if we touched the player, see if they parry
+        if (touchedPlayer)
         {
             bool withinParryWindow = (Time.time - startTime <= parryWindow);
             
@@ -28,10 +37,15 @@ public class CollisionDetecter : MonoBehaviour
             }
         }
     }
+    
+    // If the enemy touches the player, then begin Parry Window Timer
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        startTime = Time.time;
-        touchedPlayer = true;
-        parried = false;
+        if (collision.CompareTag("Player"))
+        {
+            startTime = Time.time;
+            touchedPlayer = true;
+            parried = false;
+        }
     }
 }
